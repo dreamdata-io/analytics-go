@@ -40,6 +40,9 @@ func main() {
 }
 ```
 
-## License
+## Disclaimer
+Even though this repo is forked from [Segment repo](https://github.com/segmentio/analytics-go), it might not be compatible with Segment's latest version. We never want anyone to use this fork to attempt to talk to Segment, by mistake.
 
+
+## License
 The library is released under the [MIT license](License.md).
