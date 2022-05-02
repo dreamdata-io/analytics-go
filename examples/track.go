@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/segmentio/analytics-go/v3"
+	"time"
+
+	"github.com/dreamdata-io/analytics-go"
 )
-import "time"
 
 func main() {
 	client, _ := analytics.NewWithConfig("h97jamjwbh", analytics.Config{
