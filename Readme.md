@@ -30,46 +30,50 @@ func main() {
     // Instantiates a client to send messages to the dreamdata API.
     client := analytics.New(os.Getenv("DREAMDATA_WRITE_KEY"))
 
-	errGroup := new(errgroup.Group)
+	var err error
 
-	errGroup.Go(c.Enqueue(analytics.Identify{
+	err = c.Enqueue(analytics.Identify{
 		UserId: "019mr8mf4r",
-		Traits: map[string]interface{}{
-			"email": "user@dreamdata.io",
-			"name":  "user",
-			"age":   25,
-		},
-	}))
+		Traits: analytics.NewTraits().
+			SetEmail("user@dreamdata.io").
+			SetName("user").
+			SetAge(25),
+	})
+	if err != nil {
+		// do something with your err
+	}
 
-	errGroup.Go(c.Enqueue(analytics.Track{
+	err = c.Enqueue(analytics.Track{
 		UserId: "019mr8mf4r",
 		Event:  "Song Played",
-		Properties: map[string]interface{}{
-			"name":   "My song",
-			"artist": "My artist",
-		},
-	}))
+		Properties: analytics.NewProperties().
+			SetName("My song").
+			Set("artist", "My artist"),
+	})
+	if err != nil {
+		// do something with your err
+	}
 
-	errGroup(c.Enqueue(analytics.Identify{
+	err = c.Enqueue(analytics.Identify{
 		UserId: "971mj8mk7p",
-		Traits: map[string]interface{}{
-			"email": "user2@dreamdata.io",
-			"name":  "user2",
-			"age":   26,
-		},
-	}))
+		Traits: analytics.NewTraits().
+			SetEmail("user2@dreamdata.io").
+			SetName("user2").
+			SetAge(26),
+	})
+	if err != nil {
+		// do something with your err
+	}
 
-	errGroup(c.Enqueue(analytics.Track{
+	err = c.Enqueue(analytics.Track{
 		UserId: "971mj8mk7p",
 		Event:  "Song Played",
-		Properties: map[string]interface{}{
-			"name":   "My song",
-			"artist": "My artist",
-		},
-	}))
-
-	if err := errGroup.Wait(); err == nil {
-		fmt.Printf("Successfully enqueued messages")
+		Properties: analytics.NewProperties().
+			SetName("My song").
+			Set("artist", "My artist"),
+	})
+	if err != nil {
+		// do something with your err
 	}
 
     // Flushes any queued messages and closes the client.
