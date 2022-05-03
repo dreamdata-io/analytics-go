@@ -1,6 +1,6 @@
-# analytics-go [![Circle CI](https://circleci.com/gh/segmentio/analytics-go/tree/v3.0.svg?style=shield)](https://circleci.com/gh/segmentio/analytics-go/tree/v3.0) [![go-doc](https://godoc.org/github.com/segmentio/analytics-go?status.svg)](https://godoc.org/github.com/segmentio/analytics-go)
+# analytics-go
 
-Segment analytics client for Go.
+Dreamdata analytics client for Go.
 
 ## Installation
 
@@ -11,18 +11,8 @@ versions of the library.
 
 To install it in the GOPATH:
 ```
-go get https://github.com/segmentio/analytics-go
+go get https://github.com/dreamdata-io/analytics-go
 ```
-
-## Documentation
-
-The links bellow should provide all the documentation needed to make the best
-use of the library and the Segment API:
-
-- [Documentation](https://segment.com/docs/libraries/go/)
-- [godoc](https://godoc.org/gopkg.in/segmentio/analytics-go.v3)
-- [API](https://segment.com/docs/libraries/http/)
-- [Specs](https://segment.com/docs/spec/)
 
 ## Usage
 
@@ -31,25 +21,69 @@ package main
 
 import (
     "os"
+	"golang.org/x/sync/errgroup"
 
-    "github.com/segmentio/analytics-go"
+    "github.com/dreamdata-io/analytics-go"
 )
 
 func main() {
-    // Instantiates a client to use send messages to the segment API.
-    client := analytics.New(os.Getenv("SEGMENT_WRITE_KEY"))
+    // Instantiates a client to send messages to the dreamdata API.
+    client := analytics.New(os.Getenv("DREAMDATA_WRITE_KEY"))
 
-    // Enqueues a track event that will be sent asynchronously.
-    client.Enqueue(analytics.Track{
-        UserId: "test-user",
-        Event:  "test-snippet",
-    })
+	var err error
+
+	err = c.Enqueue(analytics.Identify{
+		UserId: "019mr8mf4r",
+		Traits: analytics.NewTraits().
+			SetEmail("user@dreamdata.io").
+			SetName("user").
+			SetAge(25),
+	})
+	if err != nil {
+		// do something with your err
+	}
+
+	err = c.Enqueue(analytics.Track{
+		UserId: "019mr8mf4r",
+		Event:  "Song Played",
+		Properties: analytics.NewProperties().
+			SetName("My song").
+			Set("artist", "My artist"),
+	})
+	if err != nil {
+		// do something with your err
+	}
+
+	err = c.Enqueue(analytics.Identify{
+		UserId: "971mj8mk7p",
+		Traits: analytics.NewTraits().
+			SetEmail("user2@dreamdata.io").
+			SetName("user2").
+			SetAge(26),
+	})
+	if err != nil {
+		// do something with your err
+	}
+
+	err = c.Enqueue(analytics.Track{
+		UserId: "971mj8mk7p",
+		Event:  "Song Played",
+		Properties: analytics.NewProperties().
+			SetName("My song").
+			Set("artist", "My artist"),
+	})
+	if err != nil {
+		// do something with your err
+	}
 
     // Flushes any queued messages and closes the client.
     client.Close()
 }
 ```
 
-## License
+## Disclaimer
+Even though this repo is forked from [Segment repo](https://github.com/segmentio/analytics-go), it might not be compatible with Segment's latest version. We never want anyone to use this fork to attempt to talk to Segment, by mistake.
 
+
+## License
 The library is released under the [MIT license](License.md).

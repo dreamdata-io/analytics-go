@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/segmentio/analytics-go/v3"
+	"github.com/dreamdata-io/analytics-go"
 	"github.com/segmentio/conf"
 )
 

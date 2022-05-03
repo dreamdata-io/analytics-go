@@ -4,28 +4,28 @@ jobs:
   build-golatest:
     docker:
       - image: circleci/golang
-    working_directory: /go/src/github.com/segmentio/analytics-go
+    working_directory: /go/src/github.com/dreamdata-io/analytics-go
     steps:
       - checkout
       - run: make ci
   build-go113:
     docker:
       - image: circleci/golang:1.13
-    working_directory: /go/src/github.com/segmentio/analytics-go
+    working_directory: /go/src/github.com/dreamdata-io/analytics-go
     steps:
       - checkout
       - run: make ci
   build-go112:
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/segmentio/analytics-go
+    working_directory: /go/src/github.com/dreamdata-io/analytics-go
     steps:
       - checkout
       - run: make ci
   build-go111:
     docker:
       - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/segmentio/analytics-go
+    working_directory: /go/src/github.com/dreamdata-io/analytics-go
     steps:
       - checkout
       - run: make ci
