@@ -81,6 +81,20 @@ func main() {
 }
 ```
 
+## Batches
+Every method you call does not result in an HTTP request, but is queued in memory instead. Messages are then flushed in batch in the background, which allows for much faster operation.
+
+By default, our library will flush:
+
+- Every 20 messages (controlled by `Config.BatchSize`).
+- If 5 seconds has passed since the last flush (controlled by `Config.Interval`)
+- There is a maximum of 500KB per batch request and 32KB per call.
+
+If you don’t want to batch messages, you can turn batching off by setting the BatchSize option to 1, like so:
+```go
+c, err := analytics.NewWithConfig(os.Getenv("DREAMDATA_WRITE_KEY"), analytics.Config{BatchSize: 1})
+```
+
 ## Disclaimer
 Even though this repo is forked from [Segment repo](https://github.com/segmentio/analytics-go), it might not be compatible with Segment's latest version. We never want anyone to use this fork to attempt to talk to Segment, by mistake.
 
